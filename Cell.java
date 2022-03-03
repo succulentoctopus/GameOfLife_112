@@ -143,12 +143,66 @@ public class Cell {
 
 	// WRITE ME
 
+
+        //integer that keeps track of number of live cells
+        int count = 0;
+
+        //standard neighborhood is 3x3 with cell in question in the middle.
+        //have to check all row/column combinations in the 3x3 matrix discounting rows/columns that are off the grid.
+
+        //top row of neighbors
+        if (this._row != 0) {
+            if (this._column != 0) {
+                if (this._grid.getCell(this._row-1, this._column-1)._isAlive) {
+                    count++;
+                }
+            }
+            if (this._column != _grid.getColumns()) {
+                if (this._grid.getCell(this._row-1, this._column+1)._isAlive) {
+                    count++;
+                }
+            }
+            if (this._grid.getCell(this._row-1, this._column)._isAlive) {
+                count++;
+            }
+        }
+
+        //neighbors adjacent to cell in its row
+        if (this._column != 0) {
+            if (this._grid.getCell(this._row, this._column-1)._isAlive) {
+                count++;
+            }
+        }
+        if (this._column != _grid.getColumns()) {
+            if (this._grid.getCell(this._row, this._column+1)._isAlive) {
+                count++;
+            }
+        }
+
+        //bottom row of neighbors
+        if (this._row != _grid.getRows()) {
+            if (this._column != 0) {
+                if (this._grid.getCell(this._row+1, this._column-1)._isAlive) {
+                    count++;
+                }
+            }
+            if (this._column != _grid.getColumns()) {
+                if (this._grid.getCell(this._row+1, this._column+1)._isAlive) {
+                    count++;
+                }
+            }
+            if (this._grid.getCell(this._row+1, this._column)._isAlive) {
+                count++;
+            }
+        }
+
+
+        return count;
+
+
     }
-    // =========================================================================
 
 
-
-    // =========================================================================
     /**
      * Based on its neighbors' states, evolve this cell by calculating and
      * adopting its state for next generation.  Here, the Conway rules are that
@@ -158,6 +212,26 @@ public class Cell {
     public void evolve () {
 
 	// WRITE ME
+
+        //save live neighbors as an int value
+        int numAliveNeighbors = this.countLiveNeighbors();
+
+        //apply Conway rules
+
+        //1. a live cell with 2 or 3 live neighbors remains alive
+        if (this._isAlive && (numAliveNeighbors == 2 || numAliveNeighbors == 3)) {
+            this._willBeAlive = true;
+        }
+
+        //2. a dead cell with 3 live neighbors becomes alive
+        else if (!this._isAlive && numAliveNeighbors == 3) {
+            //this.makeAlive();
+            this._willBeAlive = true;
+        }
+        else {
+            //this.makeDead();
+            this._willBeAlive = false;
+        }
 
     } // evolve ()
     // =========================================================================
@@ -171,6 +245,13 @@ public class Cell {
     public void advance () {
 
 	// WRITE ME
+
+        //change state of cell into current liveness based on its calculated liveness of next generation
+        if (this._willBeAlive) {
+            this.makeAlive();
+        }
+
+        this.makeDead();
 	
     }
     // =========================================================================
