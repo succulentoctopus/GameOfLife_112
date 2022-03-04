@@ -148,8 +148,20 @@ public class Cell {
         int count = 0;
 
         //standard neighborhood is 3x3 with cell in question in the middle.
-        //have to check all row/column combinations in the 3x3 matrix discounting rows/columns that are off the grid.
 
+        //loop through all neighbors
+        for (int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+                if (j==0 && i==0) {
+                    continue;
+                }
+                if (this._grid.getCell(this._row-i, this._column-j)._isAlive) {
+                    count++;
+                }
+            }
+        }
+
+        /*
         //top row of neighbors
         if (this._row != 0) {
             if (this._column != 0) {
@@ -195,6 +207,8 @@ public class Cell {
                 count++;
             }
         }
+
+         */
 
 
         return count;
