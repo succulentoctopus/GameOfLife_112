@@ -71,8 +71,22 @@ public class GraphicInterface extends JPanel implements UserInterface {
 
 		// Fill a cell with color depending on its state
 		Cell  cell = _game.getCell(row, column);
-		Color color = (cell.isAlive() ? Color.RED : Color.BLACK);
-		g.setColor(color);
+		if (row < (int)(0.25*_game.getRows())) {
+            Color color = (cell.isAlive() ? Color.GREEN : Color.BLACK);
+            g.setColor(color);
+        }
+		else if (row >= (int)(0.25*_game.getRows()) && row < (int)(0.5*_game.getRows())) {
+            Color color = (cell.isAlive() ? Color.CYAN : Color.BLACK);
+            g.setColor(color);
+        }
+		else if (row >= (int)(0.5*_game.getRows()) && row < (int)(0.75*_game.getRows())) {
+            Color color = (cell.isAlive() ? Color.BLUE : Color.BLACK);
+            g.setColor(color);
+        }
+		else if (row >= (int)(0.75*_game.getRows())) {
+            Color color = (cell.isAlive() ? Color.MAGENTA : Color.BLACK);
+            g.setColor(color);
+        }
 		g.fillRect(initx, inity, _boxSize, _boxSize);
 
 		// Draw a boundary to around the cell.
