@@ -166,6 +166,22 @@ public class Game {
     public void evolve () {
 
 	// WRITE ME
+		//evolve each cell in grid
+		for (int i = 0; i < getRows(); i++) {
+			for (int j = 0; j < getColumns(); j++) {
+				getCell(i, j).evolve();
+			}
+		}
+
+		//advance each cell in grid based on above evolution
+		for (int i = 0; i < getRows(); i++) {
+			for (int j = 0; j < getColumns(); j++) {
+				getCell(i, j).advance();
+			}
+		}
+
+
+		_generation++;
 
     } // evolve ()
     // =========================================================================
@@ -196,6 +212,16 @@ public class Game {
     public int getPopulation () {
 
 	// WRITE ME
+		int count = 0;
+
+		for (int i = 0; i < getRows(); i++) {
+			for (int j = 0; j < getColumns(); j++) {
+				if (getCell(i, j)._isAlive) {
+					count++;
+				}
+			}
+		}
+		return count;
 
     } // getPopulation()
     // =========================================================================

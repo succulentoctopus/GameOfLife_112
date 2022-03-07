@@ -152,10 +152,12 @@ public class Cell {
         //loop through all neighbors
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
+
                 if (j==0 && i==0) {
                     continue;
                 }
-                if (this._grid.getCell(this._row-i, this._column-j)._isAlive) {
+                Cell c = this._grid.getCell(this._row-i, this._column-j);
+                if (c != null && c._isAlive) {
                     count++;
                 }
             }
@@ -239,11 +241,9 @@ public class Cell {
 
         //2. a dead cell with 3 live neighbors becomes alive
         else if (!this._isAlive && numAliveNeighbors == 3) {
-            //this.makeAlive();
             this._willBeAlive = true;
         }
         else {
-            //this.makeDead();
             this._willBeAlive = false;
         }
 
@@ -264,8 +264,9 @@ public class Cell {
         if (this._willBeAlive) {
             this.makeAlive();
         }
-
-        this.makeDead();
+        else {
+            this.makeDead();
+        }
 	
     }
     // =========================================================================
